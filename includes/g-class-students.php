@@ -237,27 +237,8 @@ class Students_List extends WP_List_Table {
 		if ( 'delete' === $this->current_action() ) {
 
 			self::delete_students( absint( $_GET['student_id'] ) );
-			// esc_url_raw() is used to prevent converting ampersand in url to "#038;"
-			// add_query_arg() return the current url
-			wp_redirect( esc_url_raw(add_query_arg()) );
+			wp_safe_redirect('admin.php?page=gschool_students');
 			exit;
-
-
-			// In our file that handles the request, verify the nonce.
-			// $nonce = esc_attr( $_REQUEST['_wpnonce'] );
-
-			// if ( ! wp_verify_nonce( $nonce, 'sp_delete_students' ) ) {
-			// 	die( 'Go get a life script kiddies' );
-			// }
-			// else {
-			// 	self::delete_students( absint( $_GET['customer'] ) );
-
-		    //             // esc_url_raw() is used to prevent converting ampersand in url to "#038;"
-		    //             // add_query_arg() return the current url
-		    //             wp_redirect( esc_url_raw(add_query_arg()) );
-			// 	exit;
-			// }
-
 		}
 
 		// If the delete bulk action is triggered

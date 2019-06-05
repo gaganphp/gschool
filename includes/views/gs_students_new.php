@@ -8,11 +8,12 @@ if(isset($_POST['action']) && $_POST['action']=='createuser')
     $data['dob'] = isset($_POST['dob']) ? sanitize_text_field($_POST['dob']):'';
     $data['email'] = isset($_POST['email']) ? sanitize_email($_POST['email']):'';
     $data['phone'] = isset($_POST['phone']) ? sanitize_text_field($_POST['phone']):'';
-    $data['photo'] = isset($_POST['user_photo_id']) ? sanitize_text_field($_POST['user_photo_id']):'';
+    $data['photo'] = isset($_POST['student_featured_img']) ? sanitize_text_field($_POST['student_featured_img']):'';
     $data['createddate'] = current_time('mysql');
     $data['updateddate'] = current_time('mysql');
     $data['url'] = isset($_POST['user_photo_url']) ? sanitize_text_field($_POST['user_photo_url']):'';
     Students_List::create_students($data);
+    wp_safe_redirect('admin.php?page=gschool_students');
 }
 ?>
 <div class="wrap">
