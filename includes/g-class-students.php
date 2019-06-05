@@ -114,6 +114,16 @@ class Students_List extends WP_List_Table {
 		}
 	}
 
+	// first name columns action links on mouse hover
+	function column_first_name($item) {
+		$actions = array(
+				  'edit'      => sprintf('<a href="?page=%s&action=%s&student_id=%s">Edit</a>',$_REQUEST['page'],'edit',$item['student_id']),
+				  'delete'    => sprintf('<a href="?page=%s&action=%s&student_id=%s">Delete</a>',$_REQUEST['page'],'delete',$item['student_id']),
+			  );
+	  
+		return sprintf('%1$s %2$s', $item['first_name'], $this->row_actions($actions) );
+	  }
+
 	/**
 	 * Render the bulk edit checkbox
 	 *
@@ -226,20 +236,27 @@ class Students_List extends WP_List_Table {
 		//Detect when a bulk action is being triggered...
 		if ( 'delete' === $this->current_action() ) {
 
+			self::delete_students( absint( $_GET['student_id'] ) );
+			// esc_url_raw() is used to prevent converting ampersand in url to "#038;"
+			// add_query_arg() return the current url
+			wp_redirect( esc_url_raw(add_query_arg()) );
+			exit;
+
+
 			// In our file that handles the request, verify the nonce.
-			$nonce = esc_attr( $_REQUEST['_wpnonce'] );
+			// $nonce = esc_attr( $_REQUEST['_wpnonce'] );
 
-			if ( ! wp_verify_nonce( $nonce, 'sp_delete_students' ) ) {
-				die( 'Go get a life script kiddies' );
-			}
-			else {
-				self::delete_students( absint( $_GET['customer'] ) );
+			// if ( ! wp_verify_nonce( $nonce, 'sp_delete_students' ) ) {
+			// 	die( 'Go get a life script kiddies' );
+			// }
+			// else {
+			// 	self::delete_students( absint( $_GET['customer'] ) );
 
-		                // esc_url_raw() is used to prevent converting ampersand in url to "#038;"
-		                // add_query_arg() return the current url
-		                wp_redirect( esc_url_raw(add_query_arg()) );
-				exit;
-			}
+		    //             // esc_url_raw() is used to prevent converting ampersand in url to "#038;"
+		    //             // add_query_arg() return the current url
+		    //             wp_redirect( esc_url_raw(add_query_arg()) );
+			// 	exit;
+			// }
 
 		}
 
