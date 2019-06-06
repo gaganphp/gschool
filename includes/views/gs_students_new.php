@@ -8,7 +8,7 @@ if(isset($_POST['action']) && $_POST['action']=='createuser')
     $data['dob'] = isset($_POST['dob']) ? sanitize_text_field($_POST['dob']):'';
     $data['email'] = isset($_POST['email']) ? sanitize_email($_POST['email']):'';
     $data['phone'] = isset($_POST['phone']) ? sanitize_text_field($_POST['phone']):'';
-    $data['photo'] = isset($_POST['student_featured_img']) ? sanitize_text_field($_POST['student_featured_img']):'';
+    $data['photo'] = isset($_POST['user_photo_id']) ? sanitize_text_field($_POST['user_photo_id']):'';
     $data['createddate'] = current_time('mysql');
     $data['updateddate'] = current_time('mysql');
     $data['url'] = isset($_POST['user_photo_url']) ? sanitize_text_field($_POST['user_photo_url']):'';
@@ -24,6 +24,8 @@ if(isset($_POST['action']) && $_POST['action']=='createuser')
                 <div class="meta-box-sortables ui-sortable">
                 <form method="post" name="createuser" id="gs_create_students_form" class="validate" novalidate="novalidate">
                 <input name="action" type="hidden" value="createuser">
+                <input name="user_photo_id" id="user_photo_id" type="hidden" >
+                <input name="user_photo_url" id="user_photo_url" type="hidden" >
                 <table class="form-table">
                     <tbody><tr class="form-field form-required">
                         <th scope="row"><label for="first_name">First name <span class="description">(required)</span></label></th>
