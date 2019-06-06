@@ -57,6 +57,12 @@ class Students_List extends WP_List_Table {
 	public static function delete_students( $id ) {
 		global $wpdb;
 
+		$sql = "SELECT * FROM {$wpdb->prefix}gs_students WHERE student_id=".$id ;
+		$result = $wpdb->get_results( $sql);
+		if(file_exists($result[0]->url))
+		{
+			unlink($result[0]->url);
+		}
 		$wpdb->delete(
 			"{$wpdb->prefix}gs_students",
 			[ 'student_id' => $id ],

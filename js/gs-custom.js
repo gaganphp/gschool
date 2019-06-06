@@ -19,6 +19,7 @@ jQuery(function($){
 			multiple: false // for multiple image selection set to true
 		}).on('select', function() { // it also has "open" and "close" events 
 			var attachment = custom_uploader.state().get('selection').first().toJSON();
+			console.log(attachment);
 			$('#user_photo_id').val(attachment.id);
 			$('#user_photo_url').val(attachment.url);
 			$(button).removeClass('button').html('<img class="true_pre_image" src="' + attachment.url + '" style="max-width:95%;display:block;" />').next().val(attachment.id).next().show();
