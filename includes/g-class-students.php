@@ -44,7 +44,7 @@ class Students_List extends WP_List_Table {
 	public static function create_students($data) {
 		global $wpdb;
 		$table = $wpdb->prefix."gs_students";
-		$result = $wpdb->insert(  $table, $data );
+		return $wpdb->insert(  $table, $data );
 	}
 
 
@@ -67,8 +67,6 @@ class Students_List extends WP_List_Table {
 			[ 'student_id' => $id ],
 			[ '%d' ]
 		);
-		wp_safe_redirect('admin.php?page=gschool_students');
-		exit;
 	}
 
 
