@@ -67,6 +67,8 @@ class Students_List extends WP_List_Table {
 			[ 'student_id' => $id ],
 			[ '%d' ]
 		);
+		wp_safe_redirect('admin.php?page=gschool_students');
+		exit;
 	}
 
 
