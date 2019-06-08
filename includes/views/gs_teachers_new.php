@@ -27,6 +27,8 @@ if(isset($_POST['action']) && $_POST['action']=='createuser')
                 <input name="action" type="hidden" value="createuser">
                 <table class="form-table">
                     <tbody><tr class="form-field form-required">
+                    <input name="user_photo_id" id="user_photo_id" type="hidden" >
+                    <input name="user_photo_url" id="user_photo_url" type="hidden" >
                         <th scope="row"><label for="first_name">First name <span class="description">(required)</span></label></th>
                         <td><input name="first_name" type="text" id="first_name" value="" aria-required="true" autocapitalize="none" autocorrect="off" maxlength="60"></td>
                     </tr>
