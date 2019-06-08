@@ -1,5 +1,5 @@
 <?php 
-if(isset($_POST['action']) && $_POST['action']=='createuser')
+if(isset($_POST['action_create_student']) && $_POST['action_create_student']=='createuser')
 {
     $data = [];
     $data['first_name'] = isset($_POST['first_name']) ? sanitize_text_field($_POST['first_name']):'';
@@ -12,18 +12,19 @@ if(isset($_POST['action']) && $_POST['action']=='createuser')
     $data['createddate'] = current_time('mysql');
     $data['updateddate'] = current_time('mysql');
     $data['url'] = isset($_POST['user_photo_url']) ? sanitize_text_field($_POST['user_photo_url']):'';
-    Students_List::create_students($data);
-    wp_safe_redirect('admin.php?page=gschool_students');
+    Students_List::create_students($data);  
+    echo gs_success(); 
 }
 ?>
 <div class="wrap">
     <h1 class="wp-heading-inline">Create new student</h1>
+    <a href="<?php echo site_url();?>/wp-admin/admin.php?page=gschool_students" class="page-title-action">View all</a>
     <div id="poststuff">
         <div id="post-body" class="metabox-holder columns-2">
             <div id="post-body-content">
                 <div class="meta-box-sortables ui-sortable">
                 <form method="post" name="createuser" id="gs_create_students_form" class="validate" novalidate="novalidate">
-                <input name="action" type="hidden" value="createuser">
+                <input name="action_create_student" type="hidden" value="createuser">
                 <input name="user_photo_id" id="user_photo_id" type="hidden" >
                 <input name="user_photo_url" id="user_photo_url" type="hidden" >
                 <table class="form-table">

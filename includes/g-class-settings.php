@@ -42,7 +42,7 @@ class GSettings {
 		else
 		{
 			$gaction = 'dashboard';
-		}
+		}		
 
 		switch ($gaction) {
 			case 'dashboard':

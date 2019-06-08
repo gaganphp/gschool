@@ -45,7 +45,6 @@ class Students_List extends WP_List_Table {
 		global $wpdb;
 		$table = $wpdb->prefix."gs_students";
 		$result = $wpdb->insert(  $table, $data );
-		return $result;
 	}
 
 

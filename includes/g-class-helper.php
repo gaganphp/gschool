@@ -21,6 +21,13 @@ function gs_image_uploader_field( $name, $value = '') {
 	</div>';
 }
 
+function gs_success()
+{
+	return '<div class="notice notice-success is-dismissible">
+		<p>Done!</p>
+	</div>';
+}
+
 function get_gender($key)
 {
 	switch ($key) {
