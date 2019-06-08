@@ -70,7 +70,10 @@ class GSettings {
 				break;
 			case 'new':
 				include("views/gs_students_new.php");
-				break;	
+				break;
+			case 'edit':
+				include("views/gs_students_new.php");
+				break;		
 		}
 	}
 
