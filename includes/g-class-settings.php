@@ -62,6 +62,26 @@ class GSettings {
 				exit;
 			}
 
+			if(isset($_POST['action_create_student']) && $_POST['action_create_student']=='edituser')
+			{
+				$data = [];
+				$data['first_name'] = isset($_POST['first_name']) ? sanitize_text_field($_POST['first_name']):'';
+
+				$data['student_id'] = isset($_POST['student_id']) ? sanitize_text_field($_POST['student_id']):'';				$data['last_name'] = isset($_POST['last_name']) ? sanitize_text_field($_POST['last_name']):'';
+				$data['gender'] = isset($_POST['gender']) ? sanitize_text_field($_POST['gender']):'';
+				$data['dob'] = isset($_POST['dob']) ? sanitize_text_field($_POST['dob']):'';
+				$data['email'] = isset($_POST['email']) ? sanitize_email($_POST['email']):'';
+				$data['phone'] = isset($_POST['phone']) ? sanitize_text_field($_POST['phone']):'';
+				$data['photo'] = isset($_POST['user_photo_id']) ? sanitize_text_field($_POST['user_photo_id']):'';
+				$data['createddate'] = current_time('mysql');
+				$data['updateddate'] = current_time('mysql');
+				$data['url'] = isset($_POST['user_photo_url']) ? sanitize_text_field($_POST['user_photo_url']):'';
+				Students_List::update_students($data);  
+				echo gs_success(); 
+				wp_redirect( admin_url( '/admin.php?page=gschool_students' ), 301 );
+				exit;
+			}	
+
 			
 
 		switch ($gaction) {

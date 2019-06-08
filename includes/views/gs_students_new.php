@@ -17,7 +17,8 @@ if(isset($_GET['gaction']) &&  $_GET['gaction']== 'edit' && $_GET['student_id'] 
             <div id="post-body-content">
                 <div class="meta-box-sortables ui-sortable">
                 <form method="post" name="createuser" id="gs_create_students_form" class="validate" novalidate="novalidate">
-                <input name="action_create_student" type="hidden" value="createuser">
+
+<input name="action_create_student" type="hidden" value="<?php if(isset($student->student_id)) { ?>edituser<?php }else{ ?>createuser<?php } ?>">
                 <input name="user_photo_id" id="user_photo_id" type="hidden" >
                 <input name="user_photo_url" id="user_photo_url" type="hidden" >
                 <table class="form-table">
@@ -67,7 +68,8 @@ if(isset($_GET['gaction']) &&  $_GET['gaction']== 'edit' && $_GET['student_id'] 
                     </tbody>
                     </table>
                 <p class="submit">
-                <input type="submit" name="createuser" id="createusersub" class="button button-primary" value="Add New Student"></p>
+                <input type="hidden" name="student_id" value="<?php echo isset($_GET['student_id']) ?$_GET['student_id']:''?>">
+                <input type="submit" name="createuser" id="createusersub" class="button button-primary"  value="<?php if(isset($student->student_id)) { ?>Update Student <?php }  else {?>Add New Student <?php } ?>" ></p>
                 </form>
                 </div>
             </div>

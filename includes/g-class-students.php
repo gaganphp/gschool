@@ -47,6 +47,14 @@ class Students_List extends WP_List_Table {
 		return $wpdb->insert(  $table, $data );
 	}
 
+	public static function update_students($data) {
+		global $wpdb;
+		$table = $wpdb->prefix."gs_students";
+		return $wpdb->update(  $table, $data ,array( 'student_id' => $data['student_id'] ));
+	}
+
+	
+
 
 	/**
 	 * Delete a customer record.
@@ -122,7 +130,7 @@ class Students_List extends WP_List_Table {
 	// first name columns action links on mouse hover
 	function column_first_name($item) {
 		$actions = array(
-				  'edit'      => sprintf('<a href="?page=%s&gaction=%s&student_id=%s">Edit</a>',$_REQUEST['page'],'edit',$item['student_id']),
+				'edit' => sprintf('<a href="?page=%s&gaction=%s&student_id=%s">Edit</a>',$_REQUEST['page'],'edit',$item['student_id']),
 				  'delete'    => sprintf('<a href="?page=%s&action=%s&student_id=%s">Delete</a>',$_REQUEST['page'],'delete',$item['student_id']),
 			  );
 	  
