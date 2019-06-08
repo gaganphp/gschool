@@ -56,10 +56,12 @@ if(isset($_GET['gaction']) &&  $_GET['gaction']== 'edit' && $_GET['student_id'] 
                         <td>
                         <?php 
                             $meta_key = 'student_featured_img';
-                            echo gs_image_uploader_field( $meta_key, get_post_meta(1, $meta_key, true) );
-                            echo !empty($student->photo) ? $student->photo:'';
+                            echo gs_image_uploader_field( $meta_key, get_post_meta(1, $meta_key, true) );                    
+                            if(isset($student->url) && !empty($student->url))
+                            {
                             ?>
-
+                            <img src="<?php echo !empty($student->url) ? $student->url:'';?>" width="80" height="80">
+                            <?php } ?>
                         </td>
                     </tr>
                     </tbody>
