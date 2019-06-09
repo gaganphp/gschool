@@ -41,7 +41,7 @@ class Teachers_List extends WP_List_Table {
 		return $result;
 	}
 
-	public static function create_teachers($data) {
+	public static function create_teacher($data) {
 		global $wpdb;
 
 		$table = $wpdb->prefix."gs_teacher";
@@ -49,8 +49,9 @@ class Teachers_List extends WP_List_Table {
 			$result = $wpdb->insert(  $table, $data );
 		} catch (\Throwable $th) {
 			_e( 'Error occured', 'sp' );
+			print_r($th); die;
 		}
-		
+		$wpdb->print_error(); die;
 		return $result;
 	}
 

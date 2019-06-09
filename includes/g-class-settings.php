@@ -110,6 +110,25 @@ class GSettings {
 			$gaction = 'dashboard';
 		}
 
+		if(isset($_POST['action_create_teacher']) && $_POST['action_create_teacher']=='createuser')
+		{
+			$data = [];
+			$data['first_name'] = isset($_POST['first_name']) ? sanitize_text_field($_POST['first_name']):'';
+			$data['last_name'] = isset($_POST['last_name']) ? sanitize_text_field($_POST['last_name']):'';
+			$data['gender'] = isset($_POST['gender']) ? sanitize_text_field($_POST['gender']):'';
+			$data['dob'] = isset($_POST['dob']) ? sanitize_text_field($_POST['dob']):'';
+			$data['email'] = isset($_POST['email']) ? sanitize_email($_POST['email']):'';
+			$data['phone'] = isset($_POST['phone']) ? sanitize_text_field($_POST['phone']):'';
+			$data['photo'] = isset($_POST['user_photo_id']) ? sanitize_text_field($_POST['user_photo_id']):'';
+			$data['createddate'] = current_time('mysql');
+			$data['updateddate'] = current_time('mysql');
+			$data['url'] = isset($_POST['user_photo_url']) ? sanitize_text_field($_POST['user_photo_url']):'';
+			Teachers_List::create_teacher($data);  
+			echo gs_success(); 
+			wp_redirect( admin_url( '/admin.php?page=gschool_teachers' ), 301 );
+			exit;
+		}
+
 		switch ($gaction) {
 			case 'dashboard':
 				require("views/gs_teachers_list.php");

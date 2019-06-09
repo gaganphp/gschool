@@ -1,21 +1,13 @@
 <?php 
-if(isset($_POST['action']) && $_POST['action']=='createuser')
+$student = '';
+if(isset($_GET['gaction']) &&  $_GET['gaction']== 'edit' && $_GET['teacher_id'] !=0)
 {
-    $data = [];
-    $data['first_name'] = isset($_POST['first_name']) ? sanitize_text_field($_POST['first_name']):'';
-    $data['last_name'] = isset($_POST['last_name']) ? sanitize_text_field($_POST['last_name']):'';
-    $data['gender'] = isset($_POST['gender']) ? sanitize_text_field($_POST['gender']):'';
-    $data['dob'] = isset($_POST['dob']) ? sanitize_text_field($_POST['dob']):'';
-    $data['email'] = isset($_POST['email']) ? sanitize_email($_POST['email']):'';
-    $data['phone'] = isset($_POST['phone']) ? sanitize_text_field($_POST['phone']):'';
-    $data['photo'] = isset($_POST['user_photo_id']) ? sanitize_text_field($_POST['user_photo_id']):'';
-    $data['createddate'] = current_time('mysql');
-    $data['updateddate'] = current_time('mysql');
-    $data['url'] = isset($_POST['user_photo_url']) ? sanitize_text_field($_POST['user_photo_url']):'';
-    Teachers_List::create_teachers($data);
-    wp_redirect( '?page=gschool_teachers' );
-    exit;
+    global $wpdb;
+    $id = $_GET['teacher_id'];
+    $sql = "SELECT * FROM {$wpdb->prefix}gs_teacher WHERE teacher_id=".$id;
+    $student = $wpdb->get_row( $sql);
 }
+
 ?>
 <div class="wrap">
     <h1 class="wp-heading-inline">Create new Teacher</h1>
@@ -24,7 +16,7 @@ if(isset($_POST['action']) && $_POST['action']=='createuser')
             <div id="post-body-content">
                 <div class="meta-box-sortables ui-sortable">
                 <form method="post" name="createuser" id="gs_create_teachers_form" class="validate" novalidate="novalidate">
-                <input name="action" type="hidden" value="createuser">
+                <input name="action_create_teacher" type="hidden" value="<?php if(isset($teacher->teacher_id)) { ?>edituser<?php }else{ ?>createuser<?php } ?>">
                 <table class="form-table">
                     <tbody><tr class="form-field form-required">
                     <input name="user_photo_id" id="user_photo_id" type="hidden" >
