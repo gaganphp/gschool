@@ -1,12 +1,12 @@
 <?php
-class Teachers_List extends WP_List_Table {
+class Students_List extends WP_List_Table {
 
 	/** Class constructor */
 	public function __construct() {
 
 		parent::__construct( [
-			'singular' => __( 'Teacher', 'sp' ), //singular name of the listed records
-			'plural'   => __( 'Teachers', 'sp' ), //plural name of the listed records
+			'singular' => __( 'Student', 'sp' ), //singular name of the listed records
+			'plural'   => __( 'Students', 'sp' ), //plural name of the listed records
 			'ajax'     => false //does this table support ajax?
 		] );
 
@@ -21,11 +21,11 @@ class Teachers_List extends WP_List_Table {
 	 *
 	 * @return mixed
 	 */
-	public static function get_teachers( $per_page = 5, $page_number = 1 ) {
+	public static function get_students( $per_page = 5, $page_number = 1 ) {
 
 		global $wpdb;
 
-		$sql = "SELECT * FROM {$wpdb->prefix}gs_teacher";
+		$sql = "SELECT * FROM {$wpdb->prefix}gs_students";
 
 		// if ( ! empty( $_REQUEST['orderby'] ) ) {
 		// 	$sql .= ' ORDER BY ' . esc_sql( $_REQUEST['orderby'] );
@@ -41,11 +41,19 @@ class Teachers_List extends WP_List_Table {
 		return $result;
 	}
 
-	public static function create_teacher($data) {
+	public static function create_students($data) {
 		global $wpdb;
-		$table = $wpdb->prefix."gs_teacher";
+		$table = $wpdb->prefix."gs_students";
 		return $wpdb->insert(  $table, $data );
 	}
+
+	public static function update_students($data) {
+		global $wpdb;
+		$table = $wpdb->prefix."gs_students";
+		return $wpdb->update(  $table, $data ,array( 'student_id' => $data['student_id'] ));
+	}
+
+	
 
 
 	/**
@@ -53,12 +61,18 @@ class Teachers_List extends WP_List_Table {
 	 *
 	 * @param int $id customer ID
 	 */
-	public static function delete_teachers( $id ) {
+	public static function delete_students( $id ) {
 		global $wpdb;
 
+		$sql = "SELECT * FROM {$wpdb->prefix}gs_students WHERE student_id=".$id ;
+		$result = $wpdb->get_results( $sql);
+		if(file_exists($result[0]->url))
+		{
+			unlink($result[0]->url);
+		}
 		$wpdb->delete(
-			"{$wpdb->prefix}gs_teacher",
-			[ 'teachers_id' => $id ],
+			"{$wpdb->prefix}gs_students",
+			[ 'student_id' => $id ],
 			[ '%d' ]
 		);
 	}
@@ -72,7 +86,7 @@ class Teachers_List extends WP_List_Table {
 	public static function record_count() {
 		global $wpdb;
 
-		$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}gs_teacher";
+		$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}gs_students";
 
 		return $wpdb->get_var( $sql );
 	}
@@ -80,7 +94,7 @@ class Teachers_List extends WP_List_Table {
 
 	/** Text displayed when no customer data is available */
 	public function no_items() {
-		_e( 'No teachers avaliable.', 'sp' );
+		_e( 'No students avaliable.', 'sp' );
 	}
 
 
@@ -113,6 +127,16 @@ class Teachers_List extends WP_List_Table {
 		}
 	}
 
+	// first name columns action links on mouse hover
+	function column_first_name($item) {
+		$actions = array(
+				'edit' => sprintf('<a href="?page=%s&gaction=%s&student_id=%s">Edit</a>',$_REQUEST['page'],'edit',$item['student_id']),
+				  'delete'    => sprintf('<a href="?page=%s&action=%s&student_id=%s">Delete</a>',$_REQUEST['page'],'delete',$item['student_id']),
+			  );
+	  
+		return sprintf('%1$s %2$s', $item['first_name'], $this->row_actions($actions) );
+	  }
+
 	/**
 	 * Render the bulk edit checkbox
 	 *
@@ -122,7 +146,7 @@ class Teachers_List extends WP_List_Table {
 	 */
 	function column_cb( $item ) {
 		return sprintf(
-			'<input type="checkbox" name="bulk-delete[]" value="%s" />', $item['teacher_id']
+			'<input type="checkbox" name="bulk-delete[]" value="%s" />', $item['student_id']
 		);
 	}
 
@@ -136,7 +160,7 @@ class Teachers_List extends WP_List_Table {
 	 */
 	function column_name( $item ) {
 
-		$delete_nonce = wp_create_nonce( 'sp_delete_teachers' );
+		$delete_nonce = wp_create_nonce( 'sp_delete_students' );
 
 		$title = '<strong>' . $item['name'] . '</strong>';
 
@@ -217,7 +241,7 @@ class Teachers_List extends WP_List_Table {
 			'per_page'    => $per_page //WE have to determine how many items to show on a page
 		] );
 
-		$this->items = self::get_teachers( $per_page, $current_page );
+		$this->items = self::get_students( $per_page, $current_page );
 	}
 
 	public function process_bulk_action() {
@@ -225,21 +249,9 @@ class Teachers_List extends WP_List_Table {
 		//Detect when a bulk action is being triggered...
 		if ( 'delete' === $this->current_action() ) {
 
-			// In our file that handles the request, verify the nonce.
-			$nonce = esc_attr( $_REQUEST['_wpnonce'] );
-
-			if ( ! wp_verify_nonce( $nonce, 'sp_delete_teachers' ) ) {
-				die( 'Go get a life script kiddies' );
-			}
-			else {
-				self::delete_teachers( absint( $_GET['customer'] ) );
-
-		                // esc_url_raw() is used to prevent converting ampersand in url to "#038;"
-		                // add_query_arg() return the current url
-		                wp_redirect( esc_url_raw(add_query_arg()) );
-				exit;
-			}
-
+			self::delete_students( absint( $_GET['student_id'] ) );
+			wp_safe_redirect('admin.php?page=gschool_students');
+			exit;
 		}
 
 		// If the delete bulk action is triggered
@@ -251,7 +263,7 @@ class Teachers_List extends WP_List_Table {
 
 			// loop over the array of record IDs and delete them
 			foreach ( $delete_ids as $id ) {
-				self::delete_teachers( $id );
+				self::delete_students( $id );
 
 			}
 

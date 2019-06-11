@@ -41,9 +41,9 @@ class Teachers_List extends WP_List_Table {
 		return $result;
 	}
 
-	public static function create_teacher($data) {
+	public static function create_students($data) {
 		global $wpdb;
-		$table = $wpdb->prefix."gs_teacher";
+		$table = $wpdb->prefix."gs_students";
 		return $wpdb->insert(  $table, $data );
 	}
 

@@ -55,7 +55,7 @@ if(isset($_GET['gaction']) &&  $_GET['gaction']== 'edit' && $_GET['teacher_id'] 
                         <td>
                         <?php 
                             $meta_key = 'teacher_featured_img';
-                            echo gs_image_uploader_field( $meta_key, get_post_meta(time(), $meta_key, true) );
+                            echo gs_image_uploader_field( $meta_key, get_post_meta(1, $meta_key, true) );
                             ?>
                         </td>
                     </tr>
