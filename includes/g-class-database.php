@@ -14,6 +14,7 @@ class Gdatabase {
 	public function create()
 	{	
 		$this->create_student_table();
+		$this->create_attendance_table();
 		$this->create_teacher_table();
 	}
 
@@ -21,6 +22,7 @@ class Gdatabase {
 	{
 		$this->drop_student_table();
 		$this->drop_teacher_table();
+		$this->drop_attendance_table();
 	}
 
 	public function create_student_table()
@@ -43,6 +45,24 @@ class Gdatabase {
 		PRIMARY KEY  (student_id)
 		) $charset_collate;";
 		dbDelta( $sql_student );
+	}
+
+	public function create_attendance_table()
+	{
+		
+		$charset_collate = $this->wpdb->get_charset_collate();
+		$attendance_table = $this->wpdb->prefix . "gs_attendance"; 
+		$sql_attendance = "CREATE TABLE $attendance_table (
+		attendance_id mediumint(9) NOT NULL AUTO_INCREMENT,
+		student_id mediumint(9) NOT NULL,
+		attendance_date date NOT NULL,
+		attendance mediumint(1) NOT NULL,
+		createddate datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+		updateddate datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+		url text DEFAULT '' NOT NULL,
+		PRIMARY KEY  (attendance_id)
+		) $charset_collate;";
+		dbDelta( $sql_attendance );
 	}
 
 	public function create_teacher_table()
@@ -73,6 +93,13 @@ class Gdatabase {
 		$student_table = $this->wpdb->prefix . "gs_students"; 
 		$sql_student = "DROP TABLE IF EXISTS $student_table ;";
 		$this->wpdb->query($sql_student);
+	}
+
+	public function drop_attendance_table()
+	{
+		$attendance_table = $this->wpdb->prefix . "gs_attendance"; 
+		$sql_attendance = "DROP TABLE IF EXISTS $attendance_table ;";
+		$this->wpdb->query($sql_attendance);
 	}
 
 	public function drop_teacher_table()
