@@ -47,6 +47,12 @@ class Teachers_List extends WP_List_Table {
 		return $wpdb->insert(  $table, $data );
 	}
 
+	public static function update_teacher($data) {
+		global $wpdb;
+		$table = $wpdb->prefix."gs_teacher";
+		return $wpdb->update(  $table, $data ,array( 'teacher_id' => $data['teacher_id'] ));
+	}
+
 
 	/**
 	 * Delete a customer record.
@@ -56,12 +62,23 @@ class Teachers_List extends WP_List_Table {
 	public static function delete_teachers( $id ) {
 		global $wpdb;
 
+		$sql = "SELECT * FROM {$wpdb->prefix}gs_teacher WHERE teacher_id=".$id ;
+		$result = $wpdb->get_results( $sql);
+		if(isset($result[0]->url))
+		{
+			if(file_exists($result[0]->url))
+				{
+					unlink($result[0]->url);
+				}
+		}
+
 		$wpdb->delete(
 			"{$wpdb->prefix}gs_teacher",
-			[ 'teachers_id' => $id ],
+			[ 'teacher_id' => $id ],
 			[ '%d' ]
 		);
 	}
+
 
 
 	/**
@@ -112,6 +129,15 @@ class Teachers_List extends WP_List_Table {
 				return print_r( $item, true ); //Show the whole array for troubleshooting purposes
 		}
 	}
+
+	function column_first_name($item) {
+		$actions = array(
+				'edit' => sprintf('<a href="?page=%s&gaction=%s&teacher_id=%s">Edit</a>',$_REQUEST['page'],'edit',$item['teacher_id']),
+				  'delete'    => sprintf('<a href="?page=%s&action=%s&teacher_id=%s">Delete</a>',$_REQUEST['page'],'delete',$item['teacher_id']),
+			  );
+	  
+		return sprintf('%1$s %2$s', $item['first_name'], $this->row_actions($actions) );
+	  }
 
 	/**
 	 * Render the bulk edit checkbox
@@ -208,7 +234,8 @@ class Teachers_List extends WP_List_Table {
 		/** Process bulk action */
 		$this->process_bulk_action();
 
-		$per_page     = $this->get_items_per_page( 'customers_per_page', 5 );
+		//$per_page     = $this->get_items_per_page( 'customers_per_page', 5 );
+		$per_page     = 20;
 		$current_page = $this->get_pagenum();
 		$total_items  = self::record_count();
 
@@ -225,20 +252,22 @@ class Teachers_List extends WP_List_Table {
 		//Detect when a bulk action is being triggered...
 		if ( 'delete' === $this->current_action() ) {
 
+			self::delete_teachers( absint( $_GET['teacher_id'] ) );
+			
 			// In our file that handles the request, verify the nonce.
-			$nonce = esc_attr( $_REQUEST['_wpnonce'] );
+			// $nonce = esc_attr( $_REQUEST['_wpnonce'] );
 
-			if ( ! wp_verify_nonce( $nonce, 'sp_delete_teachers' ) ) {
-				die( 'Go get a life script kiddies' );
-			}
-			else {
-				self::delete_teachers( absint( $_GET['customer'] ) );
+			// if ( ! wp_verify_nonce( $nonce, 'sp_delete_teachers' ) ) {
+			// 	die( 'Go get a life script kiddies' );
+			// }
+			// else {
+			// 	self::delete_teachers( absint( $_GET['customer'] ) );
 
-		                // esc_url_raw() is used to prevent converting ampersand in url to "#038;"
-		                // add_query_arg() return the current url
-		                wp_redirect( esc_url_raw(add_query_arg()) );
-				exit;
-			}
+		    //             // esc_url_raw() is used to prevent converting ampersand in url to "#038;"
+		    //             // add_query_arg() return the current url
+		    //             wp_redirect( esc_url_raw(add_query_arg()) );
+			// 	exit;
+			// }
 
 		}
 

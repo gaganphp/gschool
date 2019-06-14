@@ -61,7 +61,7 @@ class Gdatabase {
 		photo text NOT NULL,
 		createddate datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 		updateddate datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-		url varchar(55) DEFAULT '' NOT NULL,
+		url text DEFAULT '' NOT NULL,
 		PRIMARY KEY  (teacher_id)
 		) $charset_collate;";
 		dbDelta( $sql_teacher );
