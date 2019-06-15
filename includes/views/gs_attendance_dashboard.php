@@ -6,8 +6,8 @@
                 <div class="meta-box-sortables ui-sortable">
 
                 <?php 
-                $month = 1;
-                $year = 2019;
+                $month = date('m');
+                $year = date('Y');
                 ?> 
                 <form method="post" name="createuser" id="gs_create_teacher_form" class="validate" novalidate="novalidate">
                         <table class="form-table">
