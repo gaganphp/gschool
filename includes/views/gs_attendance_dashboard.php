@@ -6,7 +6,7 @@
                 <div class="meta-box-sortables ui-sortable">
 
                 <?php 
-                $month = date('m');
+                $month = isset($_POST['month']) ? $_POST['month']: date('m');
                 $year = date('Y');
                 ?> 
                 <form method="post" name="createuser" id="gs_create_teacher_form" class="validate" novalidate="novalidate">
@@ -44,7 +44,7 @@
                             </tbody>
                             </table>
                         </form> 
-                    <?php echo draw_calendar(10,2019,10);?>                
+                    <?php echo draw_calendar($month,$year,10);?>                
                 </div>
             </div>
         </div>
