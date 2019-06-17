@@ -78,7 +78,7 @@ function draw_calendar($month,$year,$day){
 			
 			$calendar.= '<td class="calendar-day" style="background-color:'.$bgColor.';opacity:'.$disabledOpacity.'">';
 				/* add in the day number */
-				$calendar.= '<div class="day-number">'.$list_day.'</div><a href="#TB_inline?&width=600&height=550&inlineId=my-content-id" class="thickbox view_attendance '.$disabledClasss.'" data-month="'.ltrim($month,'0').'" data-day="'.$list_day.'" data-year="'.$year.'" >Mark attendance</a>';
+				$calendar.= '<div class="day-number">'.$list_day.'</div><a class="thickbox view_attendance '.$disabledClasss.'" data-month="'.ltrim($month,'0').'" data-day="'.$list_day.'" data-year="'.$year.'" >Mark attendance</a>';
 	
 				/** QUERY THE DATABASE FOR AN ENTRY FOR THIS DAY !!  IF MATCHES FOUND, PRINT THEM !! **/
 				$calendar.= str_repeat('<p> </p>',2);
@@ -110,18 +110,6 @@ function draw_calendar($month,$year,$day){
 		
 		/* all done, return result */
 		return $calendar;
-}
-
-
-// load students list
-add_action( 'wp_ajax_get_students_list', 'get_students_list_func' );
-add_action( 'wp_ajax_nopriv_get_students_list', 'get_students_list_func' );
-function get_students_list_func() {
-	global $wpdb;
-	$sql = "SELECT `student_id`,`first_name`,`last_name` FROM {$wpdb->prefix}gs_students";
-	$result = $wpdb->get_results( $sql, 'ARRAY_A' );
-	echo json_encode($result);
-	wp_die();
 }
 
 ?>

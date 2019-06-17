@@ -118,9 +118,10 @@ add_action( 'wp_ajax_get_students_list', 'get_students_list_func' );
 add_action( 'wp_ajax_nopriv_get_students_list', 'get_students_list_func' );
 function get_students_list_func() {
 	global $wpdb;
-	$sql = "SELECT `student_id`,`first_name`,`last_name` FROM {$wpdb->prefix}gs_students";
+	$sql = "SELECT * FROM {$wpdb->prefix}gs_students";
+	echo $sql; die;
 	$result = $wpdb->get_results( $sql, 'ARRAY_A' );
-	echo json_encode($result);
+	return json_encode($result);
 	wp_die();
 }
 

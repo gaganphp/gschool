@@ -46,9 +46,11 @@
                         </form> 
                     <?php echo draw_calendar($month,$year,10);?>              
                     <?php add_thickbox(); ?>
-                    <div id="my-content-id" style="display:none;">
-                        <p>This is box</p>
-                    </div>
+                <div id="my-content-id" style="display:none;">
+                    <p>This is box
+                    </p>
+                </div>
+                <a href="#TB_inline?&width=600&height=550&inlineId=my-content-id" class="thickbox">View my inline content!</a>	  
                 </div>
             </div>
         </div>

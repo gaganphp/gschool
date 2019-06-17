@@ -44,11 +44,7 @@
                             </tbody>
                             </table>
                         </form> 
-                    <?php echo draw_calendar($month,$year,10);?>              
-                    <?php add_thickbox(); ?>
-                    <div id="my-content-id" style="display:none;">
-                        <p>This is box</p>
-                    </div>
+                    <?php echo draw_calendar($month,$year,10);?>                
                 </div>
             </div>
         </div>

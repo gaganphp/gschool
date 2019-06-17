@@ -36,15 +36,8 @@ jQuery(function($){
 		return false;
 	});
 
-	// load students list
 	$('body').on('click', '.view_attendance', function(){
 		console.log($(this));
-		var data = {
-			'action': 'get_students_list'
-		};
-		jQuery.post(ajaxurl, data, function(response) {
-			console.log("okok");
-		});
 	});
 
 	

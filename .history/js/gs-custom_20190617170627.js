@@ -40,10 +40,11 @@ jQuery(function($){
 	$('body').on('click', '.view_attendance', function(){
 		console.log($(this));
 		var data = {
-			'action': 'get_students_list'
+			'action': 'get_students',
+			'whatever': 1234
 		};
 		jQuery.post(ajaxurl, data, function(response) {
-			console.log("okok");
+			alert('Got this from the server: ' + response);
 		});
 	});
 

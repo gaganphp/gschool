@@ -40,7 +40,7 @@ jQuery(function($){
 	$('body').on('click', '.view_attendance', function(){
 		console.log($(this));
 		var data = {
-			'action': 'get_students_list'
+			'action': 'get_students'
 		};
 		jQuery.post(ajaxurl, data, function(response) {
 			console.log("okok");
