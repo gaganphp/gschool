@@ -48,11 +48,11 @@ jQuery(function($){
 				var dynamic_html = '<select>';
 				$.each(JSON.parse(response), function (key, value) {
 					console.log(value);
-					dynamic_html += '<option value='+value.student_id+'>'+value.first_name+' '+value.last_name+'</option>';
+					dynamic_html += '<option></option>';
 				});
 				dynamic_html += '</select>';
 			}
-			jQuery('#TB_ajaxContent').html(dynamic_html);
+			//jQuery('#TB_ajaxContent').html(response);
 		});
 	});
 

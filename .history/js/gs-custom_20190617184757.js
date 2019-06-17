@@ -43,16 +43,11 @@ jQuery(function($){
 			'action': 'get_students_list'
 		};
 		jQuery.post(ajaxurl, data, function(response) {
-			if(JSON.parse(response).length > 0)
-			{
-				var dynamic_html = '<select>';
-				$.each(JSON.parse(response), function (key, value) {
-					console.log(value);
-					dynamic_html += '<option value='+value.student_id+'>'+value.first_name+' '+value.last_name+'</option>';
-				});
-				dynamic_html += '</select>';
-			}
-			jQuery('#TB_ajaxContent').html(dynamic_html);
+			response = JSON.parse(response);
+			$.each(response, function (key, value) {
+				console.log(value);
+			});
+			//jQuery('#TB_ajaxContent').html(response);
 		});
 	});
 
