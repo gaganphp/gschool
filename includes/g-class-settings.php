@@ -22,11 +22,11 @@ class GSettings {
 		add_submenu_page('gschool_dashboard', __('Manage Students'), __('Manage Students'), 'edit_themes', 'gschool_students', array( $this, 'gschool_students_render' ));
 		add_submenu_page('gschool_dashboard', __('Manage Teachers'), __('Manage Teachers'), 'edit_themes', 'gschool_teachers', array($this,'gschool_teachers_render'));
 		add_submenu_page('gschool_dashboard', __('Manage Attendance'), __('Manage Attendance'), 'edit_themes', 'gschool_attendance', array($this,'gschool_attendance_render'));
-		add_submenu_page('gschool_dashboard', __('Manage Fee'), __('Manage Fee'), 'edit_themes', 'gschool_fee', 'gschool_fee_render');
-		add_submenu_page('gschool_dashboard', __('Manage Timetable'), __('Manage Timetable'), 'edit_themes', 'gschool_timetable', 'gschool_timetable_render');
-		add_submenu_page('gschool_dashboard', __('Manage Syllabus'), __('Manage Syllabus'), 'edit_themes', 'gschool_syllabus', 'gschool_syllabus_render');
-		add_submenu_page('gschool_dashboard', __('Manage Classes'), __('Manage Classes'), 'edit_themes', 'gschool_classes', 'gschool_classes_render');
-		add_submenu_page('gschool_dashboard', __('Manage Result'), __('Manage Result'), 'edit_themes', 'gschool_result', 'gschool_result_render');
+		add_submenu_page('gschool_dashboard', __('Manage Fee'), __('Manage Fee'), 'edit_themes', 'gschool_fee', 'gschool_fee_render', array( $this, 'gschool_students_render' ));
+		add_submenu_page('gschool_dashboard', __('Manage Timetable'), __('Manage Timetable'), 'edit_themes', 'gschool_timetable', 'gschool_timetable_render', array( $this, 'gschool_students_render' ));
+		add_submenu_page('gschool_dashboard', __('Manage Syllabus'), __('Manage Syllabus'), 'edit_themes', 'gschool_syllabus', 'gschool_syllabus_render', array( $this, 'gschool_students_render' ));
+		add_submenu_page('gschool_dashboard', __('Manage Classes'), __('Manage Classes'), 'edit_themes', 'gschool_classes', 'gschool_classes_render', array( $this, 'gschool_students_render' ));
+		add_submenu_page('gschool_dashboard', __('Manage Result'), __('Manage Result'), 'edit_themes', 'gschool_result', 'gschool_result_render', array( $this, 'gschool_students_render' ));
 		$this->students_obj = new Students_List();
 		$this->teachers_obj = new Teachers_List();
 	}
